@@ -11,24 +11,26 @@
     crossorigin="anonymous"></script>    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Document</title>
 </head>
-<body>
-   <div id="container">
-        <div class="container-fluid">
-        <h1>Ok JI</h1>    
-        <button class="btn btn-default">yess</button>
-        
-        
-        </div>   
+<body style="height:100%;position:absolute;width:100%;background-color:lightgreen;"> 
+    <div id="container" style="background-color: white;margin:100px auto;height:300px;width:800px;">
+        <div id="userinfo" style="position:relative;align-items: center;padding:30px;">
+            <div style="position: absolute;top:-50px;left:50%;margin-left:-50px;">
+                <div class="figure" style="background-color: black;width:100px;height:100px;margin:0px auto;border-radius:50%;overflow:hidden;">
+                    <img src="" alt="nf">
+                </div>
+                <div class="text" style="text-align: center;font-weight:700;">
+                    <%= user %>
+                </div>
+            </div>
+        <div>
+     
+        <form action="/recive" style="margin-top:80px;text-align: center">
+            <input type="hidden" name="username" id="username" value=<%= user %>>
+            <label for="message" style="display:block;text-align: center"> Just leave a Message</label>
+            <textarea name="message" id="message" rows="5" style="width:100%;margin:0px auto;"></textarea>
+            <input type="submit" class="btn btn-success">
+        </form>
 
-
-
-   </div>
-
-<script>
-console.log($("#container").html());
-
-
-</script>
-    
+    </div>   
 </body>
 </html>
