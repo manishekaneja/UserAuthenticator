@@ -1,14 +1,14 @@
-var Object= require('./object.js');
-var list={
-    userlist:[],
-    addUser:function(username){
-        if(this.userlist.filter((ele)=>ele.name==username).length>0){
-            return "Already Exist in List";
+var Object = require('./object.js');
+var list = {
+    userlist: [],
+    addUser: function (username,password) {
+        if (this.userlist.filter((ele) => ele.username==username).length > 0) {
+            console.log("ALREADY");
         }
-        else{
-        this.userlist.push(new Object(username));
-        this.userlist[0].addMessage("succ");
-        console.log(this.userlist[0]);
-    }}
+        else {
+            this.userlist.push(new Object(username,password));
+            console.log("WERW")
+        }
+    }
 }
-module.exports=list;
+module.exports = list;

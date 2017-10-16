@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script
-    src="https://code.jquery.com/jquery-3.2.1.js"
-    integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-    crossorigin="anonymous"></script>    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Document</title>
 </head>
-<body style="height:100%;position:absolute;width:100%;background-color:lightgreen;"> 
+
+<body style="height:100%;position:absolute;width:100%;background-color:lightgreen;">
     <div id="container" style="background-color: white;margin:100px auto;height:300px;width:800px;">
         <div id="userinfo" style="position:relative;align-items: center;padding:30px;">
             <div style="position: absolute;top:-50px;left:50%;margin-left:-50px;">
@@ -22,72 +22,83 @@
                     <%= user %>
                 </div>
             </div>
-            <div>   
+            <div>
 
-            <form action="/recive" method="post" style="margin-top:80px;text-align: center">
-                <input type="hidden" name="user" id="user" value=<%= user %>>
-                <label for="message" style="display:block;text-align: center"> Just leave a Message</label>
-                <textarea name="message" id="message" rows="5" style="width:100%;margin:0px auto;"></textarea>
-                <input type="submit" class="btn btn-success">
-            </form>
+                <form action="/recive" method="post" style="margin-top:80px;text-align: center">
+                    <input type="hidden" name="user" id="user" value=<%=user %>>
+                    <label for="message" style="display:block;text-align: center"> Just leave a Message</label>
+                    <textarea name="message" id="message" rows="5" style="width:100%;margin:0px auto;"></textarea>
+                    <input type="submit" class="btn btn-success">
+                </form>
+            </div>
+
         </div>
-        
-    </div>
-    <div id="warnbox" class="alert alert-warning alert-dismissible" role="alert">
+        <div id="warnbox" class="alert alert-warning alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <strong>Blank Messages are not appreciated!</strong> 
+            <strong>Blank Messages are not appreciated!</strong>
         </div>
         <div id="successbox" class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <strong>Your Message has been delivered :)</strong> 
+            <strong>Your Message has been delivered :)</strong>
         </div>
-    </div> 
+        <div id="failbox" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Failed to Send the Message :(</strong>
+        </div>
+    </div>
     <script>
-            $('form').submit(function(event){
-                event.preventDefault();
-                
-                $("#message").val("");
-                
-            })
-            $('#container').append($(``));
-            
-                            $('#container').append($(``));
-                            $("#warnbox").hide();
-                            $("#successbox").hide();
-            
-            function al(element){
-                element.show(100);
-                setTimeout(function(){
-                            element.hide(100);
-                        },3000);
-            }
-            
-            $("input[type='submit']").click(function(event){
-                console.log(event.target);
-                var message=$("#message").val();
-                if(message.trim().length!=0){
-                $.post("/message/",{
-                    user:$("#user").val(),
-                    message:message
-                 } ,function(data,error){
+        $('form').submit(function (event) {
+            event.preventDefault();
+
+            $("#message").val("");
+
+        })
+        $("#warnbox").hide();
+        $("#successbox").hide();
+        $('#failbox').hide();
+
+        function al(element) {
+            element.show(100);
+            setTimeout(function () {
+                element.hide(100);
+            }, 3000);
+        }
+
+        $("input[type='submit']").click(function (event) {
+            console.log(event.target);
+            var message = $("#message").val();
+            if (message.trim().length != 0) {
+                $.post("/message/", {
+                    user: $("#user").val(),
+                    message: message
+                }, function (data, error) {
+                    console.log(data);
+                    if(data==true){
                     al($("#successbox"));
-            
-                        console.log("NOOOO");
-                        });
-                    }   
+                    }
                     else{
-                      
-                       al($("#warnbox"));
-                        
-                        console.log("NOOOO");
-                    }        
-            })
+                                            al($("#failbox"));
+
+                    }
+                    console.log("NOOOO");
+                });
+            }
+            else {
+
+                al($("#warnbox"));
+
+                console.log("NOOOO");
+            }
+        })
             // $("div[role='alert']").fadeOut(1000);
-            </script>
-              
+    </script>
+
 </body>
+
 </html>

@@ -1,10 +1,11 @@
-class Object{
-    constructor(name){
-        this.name=name;
-        this.messages=[];
+class Object {
+    constructor(name,password) {
+        this.username = name;
+        this.password= password;
+        this.messages = [];
     }
-    addMessage(message){
+    addMessage(message) {
         this.messages.push(message);
     }
 }
-module.exports=Object;
+module.exports = Object;
