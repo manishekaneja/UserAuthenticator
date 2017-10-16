@@ -74,16 +74,16 @@
             console.log(event.target);
             var message = $("#message").val();
             if (message.trim().length != 0) {
-                $.post("/message/", {
+                $.post("/message/addmessage", {
                     user: $("#user").val(),
                     message: message
                 }, function (data, error) {
                     console.log(data);
-                    if(data==true){
-                    al($("#successbox"));
+                    if (data == true) {
+                        al($("#successbox"));
                     }
-                    else{
-                                            al($("#failbox"));
+                    else {
+                        al($("#failbox"));
 
                     }
                     console.log("NOOOO");
@@ -96,9 +96,11 @@
                 console.log("NOOOO");
             }
         })
+
             // $("div[role='alert']").fadeOut(1000);
     </script>
-
+    <a href="/">okkk</a>
+    
 </body>
 
 </html>

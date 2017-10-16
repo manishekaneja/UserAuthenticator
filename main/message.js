@@ -10,6 +10,7 @@ const obj = require("../model/object.js");
 const router = express.Router();
 
 router.get("/", function (req, res) {
+    console.log(list);
     if (list.userlist.filter((ele) => ele.username == req.query.user).length > 0) {
         res.render("./message/message.ejs", {
             "user": req.query.user
@@ -18,10 +19,15 @@ router.get("/", function (req, res) {
         res.redirect("/error");
     }
 })
-router.post("/", function (req, res) {
+router.post("/",function(req,res){
+    res.redirect("/message?user="+req.body.username);
+    
+})
+
+router.post("/addmessage", function (req, res) {
     list.userlist.filter((ele) => ele.username == req.body.user)[0].addMessage(req.body.message);
     console.log(JSON.stringify(list));
-    // res.send(true);
+    res.send(true);
 })
 
 module.exports = router;

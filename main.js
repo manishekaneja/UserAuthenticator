@@ -15,15 +15,22 @@ app.listen("3000", function () {
 
 app.set('views', path.normalize(__dirname + '/public'));
 //=====================================================
-const login = require('./main/first.js');
-app.use('/', login);
-
+app.use('/login', require('./main/login.js'));
 //=====================================================
-const message = require('./main/message.js');
-app.use('/message', message);
+app.use('/', require('./main/dashboard.js'));
+//=====================================================
+app.use('/message',  require('./main/message.js'));
 
 //For ERROR Pages
 //=====================================================
 app.get("/error", function (req, res) {
     res.sendFile(__dirname + "/public/error/error.html");
+})
+app.get("/c",function(req,res){
+    res.sendFile(__dirname + "/public/login/create.html");
+})
+app.post("/register",function(req,res){
+    console.log(req.body);
+    list.addUser(req.body);
+    res.sendFile(__dirname + "/public/login/login.html");
 })

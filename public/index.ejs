@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body style="height:100%;position:absolute;width:100%;background-color:lightgreen;">
+    <div id="container">
+        <div class="container" style="background-color: white;margin:100px auto;width:800px;height:200px">
+            <div id="userinfo" style="margin:10px">
+                <div class="figure" style="background-color: black;width:100px;height:100px;margin:0px auto;border-radius:50%;overflow:hidden;">
+                    <img src="" alt="nf">
+                </div>
+                <div class="text" style="display:block;text-align: center;font-weight:700;">
+                    <%= data.username%>
+                </div>
+                <div class="text" style="display:block;text-align: center;font-weight:700;">
+                    Messages: <%= data.messages.length %>
+                </div>
+
+            </div>
+        </div>
+        <div class="container" style="background-color: white;padding:50px;margin:100px auto;width:800px;">
+            <!-- Nav tabs -->
+            <ul class="nav nav-pills nav-justified" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#message" aria-controls="home" role="tab" data-toggle="tab">Received</a>
+                </li>
+                <li role="presentation">
+                    <a href="#fav" aria-controls="messages" role="tab" data-toggle="tab">Favorites</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="message">
+                    <%        for(let i=0;i<data.messages.length;++i){        %>
+                            <div class=" message alert" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" style="padding:3px;" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <button type="button" class="close" style="padding:3px;">
+                                        <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+            
+                                    </button>
+                                  
+
+<%= data.messages[i] %>
+                                </div>
+                        
+                            <%
+                        }
+                    %>
+                    <div class="message alert" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <button type="button" class="close" style="padding:3px;">
+                            <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+
+                        </button>
+                        <strong>Blank Messages are not appreciated 2!</strong>
+                    </div>
+
+
+                </div>
+                <div role="tabpanel" class="tab-pane" id="fav">Fav Message TAB</div>
+            </div>
+
+        </div>
+    </div>
+    <a href="/message?user=<%=data.username%>">messages</a>
+</body>
+<script>
+    $(".nav-pills").click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
+
+</script>
+
+</html>
