@@ -10,30 +10,13 @@ const obj = require("../model/object.js");
 
 router.get("/", function (req, res) {
     res.sendFile(path.normalize(__dirname+"/../public/login/login.html"));
-
 })
 router.post("/", function (req, res) {
-   
-   if(list.addUser(req.body.username,req.body.password)){
-    res.render("./index.ejs",{
-        "data":{
-            "username":req.body.username,
-            "messages":["Ok","okkkay","wait for it","ha","ha","hahaha"]
-
-        }
-    })   
-    
-
+   if(list.isValid(req.body.username,req.body.password)){
+    res.redirect(307,"/");   
    }
    else{
        res.redirect("/login");
    }
-   
-   
-   
-    
-    // res.redirect("/message?user="+req.body.username);
 });
-
-
 module.exports = router;

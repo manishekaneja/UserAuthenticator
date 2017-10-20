@@ -26,11 +26,11 @@ app.use('/message',  require('./main/message.js'));
 app.get("/error", function (req, res) {
     res.sendFile(__dirname + "/public/error/error.html");
 })
-app.get("/c",function(req,res){
+app.get("/register",function(req,res){
     res.sendFile(__dirname + "/public/login/create.html");
 })
 app.post("/register",function(req,res){
     console.log(req.body);
-    list.addUser(req.body);
-    res.sendFile(__dirname + "/public/login/login.html");
+    list.addUser(req.body.name,req.body.username,req.body.password,req.body.email);
+    res.redirect(307,"/login");
 })
