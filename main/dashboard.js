@@ -23,7 +23,8 @@ router.post("/", function (req, res) {
     res.render("./index.ejs",{
         "data":{
             "username":req.body.username,
-            "messages":list.isPresent(req.body.username).messages
+            "messages":["asd",'asdasd','asdasdasd']
+            //list.isPresent(req.body.username).messages
         }
     });
 }});

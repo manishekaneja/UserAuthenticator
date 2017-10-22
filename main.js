@@ -33,18 +33,16 @@ app.get("/register", function (req, res) {
 app.post("/register", function (req, res) {
     console.log(req.body);
     try {
-        console.log("here");
-       database.add(req.body);
-        console.log('saved0');
-        list.addUser(req.body.name, req.body.username, req.body.password, req.body.email);        
-        console.log('sending');
+        database.add(req.body);
+        list.addUser(req.body.name, req.body.username, req.body.password, req.body.email);
         res.redirect(307, "/login");
     }
     catch (e) {
-
-        
-        console.log(t);
-        console.log('oopssss');
         res.redirect('/register');
     }
+})
+app.get('/testing',function(req,res){
+    // database.search('A',res);
+    // database.isValid('MY','MY',res);
+    res.send(database.isValid('A','A'));
 })
