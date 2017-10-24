@@ -2,13 +2,26 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
+const session = require('express-session');
+const cookie = require('cookie-parser');
 const ejs = require("ejs");
-const list = require("./model/list.js");
-const obj = require("./model/object.js");
+// const list = require("./model/list.js");
+// const obj = require("./model/object.js");
 const database = require('./db/dboper.js');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(session({
+    secret: 'can u'
+    ,
+
+    cookie: {
+        secure: false,
+        maxAge: 6000 * 6
+    }
+}
+));
+app.use(cookie());
 
 app.listen("3000", function () {
     console.log("Server Running at : 3000");
@@ -34,15 +47,14 @@ app.post("/register", function (req, res) {
     console.log(req.body);
     try {
         database.add(req.body);
-        list.addUser(req.body.name, req.body.username, req.body.password, req.body.email);
         res.redirect(307, "/login");
     }
     catch (e) {
         res.redirect('/register');
     }
 })
-app.get('/testing',function(req,res){
+app.get('/testing', function (req, res) {
     // database.search('A',res);
     // database.isValid('MY','MY',res);
-    res.send(database.isValid('A','A'));
+    res.send(database.isValid('A', 'A'));
 })

@@ -14,16 +14,20 @@ const getDB = {
         });
 
     },
-    'isValid': function (email, password,res) {
-        collection.findOne({ 'email': email }, function (error, obj) {
+    'isValid': function (req,res) {
+        collection.findOne({ 'email': req.session.email }, function (error, obj) {
+
             console.log('ko');
             if (error)
                 throw error;
             if (obj) {
+                console.log("TKT");
                 console.log(obj);
                 if (obj.password == password) {
+                    // obj.sessionID=req.sessionID;                    
                     console.log('yes');
-                    res.redirect(307,"/");   
+                    console.log(obj);
+                    res.redirect("/");   
                 }
                 else {
                     res.redirect("/login");
@@ -31,6 +35,8 @@ const getDB = {
             } else {
                 res.redirect("/login");
             }
+            res.redirect("/login");
+            
         });
     }
 
