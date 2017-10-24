@@ -7,6 +7,7 @@ const app = express();
 const router = express.Router();
 
 router.get("/", function (req, res) {
+    logger.debug("Loading Dashboard Page=> Using Get Request")
         console.log("KKOO "+req.sessionID);
         console.log(req.session);
         if(req.session.username||req.session.emailID){
@@ -28,7 +29,8 @@ router.get("/", function (req, res) {
  } });
 router.post("/", function (req, res) {
     console.log("Inside Dashboard");
-    console.log(req.body)
+    if(!req.session.username||!req.session.emailID){
+        console.log(req.body)
     if(Object.getOwnPropertyNames(req.body).length === 0){
         console.log("ok")
         res.redirect("/login");
@@ -43,5 +45,5 @@ router.post("/", function (req, res) {
             //list.isPresent(req.body.username).messages
         }
     });
-}});
+}}});
 module.exports = router;

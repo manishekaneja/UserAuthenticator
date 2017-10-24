@@ -79,3 +79,5 @@ node_modules/unpipe
 node_modules/util-deprecate
 node_modules/utils-merge
 node_modules/vary
+cheese.log
+.gitignore
