@@ -2,48 +2,55 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
+const log4js = require('log4js');
+const logger = log4js.getLogger('cheese');
+
 // const list = require("../model/list.js");
 // const obj = require("../model/object.js");
 const router = express.Router();
 
 router.get("/", function (req, res) {
     logger.debug("Loading Dashboard Page=> Using Get Request")
-        console.log("KKOO "+req.sessionID);
-        console.log(req.session);
-        if(req.session.username||req.session.emailID){
-            res.render("./index.ejs",{
-                "data":{
-                    "username":req.session.username,
-                    "messages":["asd",'asdasdasd']
-                    //list.isPresent(req.body.username).messages
-                }
-            })
-            // res.send("u can ");
-        }
-        else{
-            console.log("ok")
-            console.log("Inside Dashboard33");
-            
+    console.log("KKOO " + req.sessionID);
+    console.log(req.session);
+    if (req.session.username || req.session.emailID) {
+        res.render("./index.ejs", {
+            "data": {
+                "username": req.session.username,
+                "messages": ["asd", 'asdasdasd']
+                //list.isPresent(req.body.username).messages
+            }
+        })
+        // res.send("u can ");
+    }
+    else {
+        console.log("Inside Dashboard33");
+
         res.redirect("/login");
         // res.send("AND U WILL");
- } });
-router.post("/", function (req, res) {
-    console.log("Inside Dashboard");
-    if(!req.session.username||!req.session.emailID){
-        console.log(req.body)
-    if(Object.getOwnPropertyNames(req.body).length === 0){
-        console.log("ok")
-        res.redirect("/login");
     }
-    else{
-        req.session=req.body;
-        data.addSession(req.session)
-    res.render("./index.ejs",{
-        "data":{
-            "username":req.body.username,
-            "messages":["asd",'asdasd','asdasdasd']
-            //list.isPresent(req.body.username).messages
+});
+router.post("/", function (req, res) {
+    logger.debug("Loading Dashboard Page=> Using Post Request")
+
+    console.log("Inside Dashboard");
+    if (!req.session.username || !req.session.emailID) {
+        console.log(req.body)
+        if (Object.getOwnPropertyNames(req.body).length === 0) {
+            console.log("ok")
+            res.redirect("/login");
         }
-    });
-}}});
+        else {
+            req.session = req.body;
+            data.addSession(req.session,logger);
+            res.render("./index.ejs", {
+                "data": {
+                    "username": req.body.username,
+                    "messages": ["asd", 'asdasd', 'asdasdasd']
+                    //list.isPresent(req.body.username).messages
+                }
+            });
+        }
+    }
+});
 module.exports = router;

@@ -62,9 +62,8 @@ app.post("/register", function (req, res) {
     console.log(req.body);
     try {
         logger.debug("Call to Database Add function");
-        database.add(req.body);
-        logger.debug("Directed to Login Page => Status:307");
-        res.redirect(307, "/login");
+        database.add(req.body,res,logger);
+       
     }
     catch (e) {
         logger.error("Exeption Occured While Entering registering User in Database");
@@ -76,5 +75,5 @@ app.get('/testing', function (req, res) {
     // database.search('A',res);
     // database.isValid('MY','MY',res);
     logger.debug("ONLY FOR TESTING PHASE");
-    res.send(database.isValid('A', 'A'));
+    res.send(database.isValid('A', 'A',logger));
 })
