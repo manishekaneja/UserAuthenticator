@@ -4,50 +4,42 @@ const bodyParser = require('body-parser');
 const app = express();
 const log4js = require('log4js');
 const logger = log4js.getLogger('cheese');
-
-// const list = require("../model/list.js");
-// const obj = require("../model/object.js");
 const router = express.Router();
+const database = require('../db/dboper.js');
 
 router.get("/", function (req, res) {
     logger.debug("Loading Dashboard Page=> Using Get Request")
-    console.log("KKOO " + req.sessionID);
-    console.log(req.session);
-    if (req.session.username || req.session.emailID) {
-        res.render("./index.ejs", {
-            "data": {
-                "username": req.session.username,
-                "messages": ["asd", 'asdasdasd']
-                //list.isPresent(req.body.username).messages
-            }
-        })
-        // res.send("u can ");
-    }
-    else {
-        console.log("Inside Dashboard33");
+    if (req.session.data ){
 
-        res.redirect("/login");
-        // res.send("AND U WILL");
+        logger.debug("Session data found"+JSON.stringify(req.session.data));
+        res.render("./index.ejs", {
+            "data": req.session.data
+        })
+    } else {
+        if (req.sessionID) {
+            logger.debug("Session ID Found");
+            
+            database.searchSessionID(req,res);
+        } else {
+            logger.debug("Nothing Found");
+            
+            res.redirect("/login");
+        }
     }
 });
 router.post("/", function (req, res) {
     logger.debug("Loading Dashboard Page=> Using Post Request")
-
-    console.log("Inside Dashboard");
-    if (!req.session.username || !req.session.emailID) {
-        console.log(req.body)
-        if (Object.getOwnPropertyNames(req.body).length === 0) {
-            console.log("ok")
+    if (!req.session.data.username) {
+        if (!req.body.username) {
+            logger.debug("Back to login from Post");
             res.redirect("/login");
         }
         else {
-            req.session = req.body;
-            data.addSession(req.session,logger);
+            database.addSession(req, logger);
             res.render("./index.ejs", {
                 "data": {
-                    "username": req.body.username,
-                    "messages": ["asd", 'asdasd', 'asdasdasd']
-                    //list.isPresent(req.body.username).messages
+                    "username": req.session.username,
+                    "messages": req.session.messages
                 }
             });
         }
