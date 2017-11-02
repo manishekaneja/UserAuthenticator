@@ -36,11 +36,14 @@ app.use(session({
 ));
 app.use(cookie());
 
+
 app.listen("3000", function () {
     console.log("Server Running at : 3000");
 })
-
-app.set('views', path.normalize(__dirname + '/public'));
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public/ang'));
+// app.set('views', path.normalize(__dirname + '/public/ang/'));
+console.log("OK")
 //=====================================================
 app.use('/login', require('./main/login.js'));
 //=====================================================
